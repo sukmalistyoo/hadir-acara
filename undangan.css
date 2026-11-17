@@ -1,0 +1,16 @@
+@font-face{font-family:Allura;src:url(allura.ttf) format("truetype");font-display:swap}
+#invitation-options{border:0;border-top:1px solid #c7c9ba;margin:18px 0;padding:12px 0 0;display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+#invitation-options legend{padding-right:12px;font:20px Georgia,serif}#invitation-options label{flex:1 1 120px;margin:0}#preview{font-size:13px}
+.invitation{--ink:#62462f;--accent:#825d41;background:#e7e3da;color:var(--ink)}
+.invitation header,.invitation .heading,.invitation .rings,.invitation .cover-copy i,.invitation .cover-copy p,.invitation .cover-foot,.invitation .leaf-top span{display:none}
+.invitation main{max-width:530px;padding:0;margin:auto}.invitation .spread{display:block}
+.invitation .cover{min-height:100svh;margin:0;padding:clamp(70px,17svh,180px) 38px clamp(52px,11svh,115px);justify-content:space-evenly;gap:38px}
+.invitation .cover-paper{border:0;background:#f9f2e9;overflow:hidden}
+.floral .cover-paper:before,.floral .cover-paper:after{content:"";position:absolute;height:40%;inset:0 0 auto;background:url(bunga.jpg) center 45%/cover;filter:sepia(.38) saturate(.62);mask-image:linear-gradient(#000,transparent)}
+.floral .cover-paper:after{inset:auto 0 0;transform:rotate(180deg)}
+.invitation .cover-copy span{font:italic 17px Georgia,serif;letter-spacing:.02em}
+.invitation .cover-copy h2{font:normal clamp(62px,16vw,92px)/.98 Allura,cursive;max-width:7ch;letter-spacing:0;margin:26px auto 0}
+.dedication{display:grid;gap:6px;justify-items:center;max-width:100%;font:16px/1.45 Georgia,serif}.dedication strong{overflow-wrap:anywhere}.dedication button{margin-top:14px;border:0;border-radius:3px;padding:12px 23px;background:var(--accent);color:white}
+.pinus{--ink:#173c32;--accent:#294d3a}.pinus .cover-paper{background:linear-gradient(#eff4e9bb,#ecf1e9e8 55%,#f0f1eaaa),url(sampul-pinus.jpg) center/cover}.pinus .cover-copy h2{font:italic clamp(44px,12vw,67px)/1.02 Georgia,serif;max-width:9ch;letter-spacing:-.06em}
+.klasik{--ink:#ffedcc;--accent:#805e32}.klasik .cover-paper{background:#30272c}.klasik .cover-paper:before{content:"";position:absolute;inset:22px;border:4px double #b59969;border-radius:48% 48% 0 0 / 22% 22% 0 0}.klasik .cover-copy span{text-transform:uppercase;font:12px Georgia;letter-spacing:.18em}.klasik .cover-copy h2{font:normal clamp(46px,12vw,69px)/1.08 Georgia;max-width:8ch}
+.invitation .leaf{min-height:100svh;color:#393b32;padding:clamp(24px,7vw,46px);background:#fffaf1}.invitation #occasion{padding:34px 0;border-bottom:1px solid #d7cbbb;margin-bottom:28px}.invitation #occasion h2{font:52px/1.1 Allura,Georgia;margin:0 0 14px}.invitation .leaf{display:flex;flex-direction:column}.invitation #occasion{order:-1}.invitation .leaf-top{border:0}

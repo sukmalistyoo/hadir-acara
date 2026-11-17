@@ -1,6 +1,13 @@
 const $=s=>document.querySelector(s);
 const api='https://pemdesgripit.id/api/v1/demo/buku-tamu';
 const guest=new URLSearchParams(location.search).get('undangan');
+const params=new URLSearchParams(location.search);
+const preview=params.has('contoh') && !guest;
+const invitation=Boolean(guest)||preview;
+const designs=['floral','pinus','klasik'];
+const requested=params.get('contoh')||params.get('tema');
+const design=designs.includes(requested)?requested:'floral';
+const recipient=(params.get('untuk')||'').trim().slice(0,70);
 const ownerKey='hadir-wedding-owner-v1';
 let owner=JSON.parse(localStorage.getItem(ownerKey)||'null'), guests=[], selected=null, marked=false, creating=null;
 let details={couple:'Laras & Damar',date:'2027-02-14',time:'10:00',place:'Pendopo Taman Pinus',theme:'pine'};
@@ -10,9 +17,14 @@ async function req(path='',data=null,key=null){
  if(!res.ok){const err=new Error(res.status===410?'Demo berakhir. Buat undangan baru.':res.status===409?'Tamu sudah check-in.':res.status===429?'Tunggu sebentar sebelum mencoba lagi.':'Permintaan gagal. Periksa koneksi atau isian.');err.status=res.status;throw err;}return res.status===204?null:res.json();
 }
 function render(){
- document.body.className=(guest?'guest ':'')+details.theme;
+ document.body.className=invitation?'guest invitation '+design:details.theme;
  $('#couple').textContent=details.couple;$('#when').textContent=new Date(details.date+'T12:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})+' · '+details.time;$('#venue').textContent=details.place;
- if(guest)return;
+ if(invitation){
+   $('#names').textContent=details.couple;
+   $('#schedule').textContent=$('#when').textContent;
+   $('#location').textContent=details.place;
+   return;
+ }
  const rows=owner?guests:sample;
  $('#expected').textContent=rows.reduce((n,g)=>n+(g.attending?g.count:0),0);$('#arrived').textContent=rows.reduce((n,g)=>n+(g.checked?g.count:0),0);
  $('#refresh').hidden=!owner;$('#rows').replaceChildren();
@@ -42,7 +54,10 @@ async function shareGuestLink(atDoor) {
    if(atDoor){
      const data=await req('/'+owner.id,null,owner.key);
      url.searchParams.set('acara',owner.id);url.hash=data.entry_key;
-   }else url.searchParams.set('undangan',owner.id);
+   }else {
+     url.searchParams.set('undangan',owner.id);
+     attachDesign(url);
+   }
    $('#sharing h2').textContent=atDoor?'QR Buku Tamu':'Undangan digital';
    $('#open').textContent=atDoor?'Buka form tamu ↗':'Buka undangan ↗';
    $('#qr').alt=atDoor?'QR Buku Tamu':'QR undangan';$('#copy').textContent='Salin';
@@ -62,7 +77,41 @@ function xy(e){const r=pad.getBoundingClientRect();return [(e.clientX-r.left)*pa
 pad.onpointerdown=e=>{drawing=true;pad.setPointerCapture(e.pointerId);ctx.beginPath();ctx.moveTo(...xy(e));ctx.lineWidth=2;ctx.lineCap='round';};
 pad.onpointermove=e=>{if(drawing){ctx.lineTo(...xy(e));ctx.stroke();marked=true;$('#confirm').disabled=false;}};pad.onlostpointercapture=()=>drawing=false;
 $('#reset').onclick=clearPad;$('#confirm').onclick=async()=>{if(!marked)return;$('#confirm').disabled=true;try{await req('/'+owner.id,{guest:selected,signature:pad.toDataURL()},owner.key);$('#sign').close();await sync();}catch(e){$('#sign').close();problem(e);}finally{$('#confirm').disabled=false;}};
-if(guest){$('#owner').hidden=true;$('.heading h1').textContent='Undangan pernikahan';$('#leaf-title').textContent='Konfirmasi kedatangan';$('#page-label').textContent='RSVP';}
-render();sync().catch(problem);
-if(!guest)setInterval(()=>{if(owner&&!document.hidden&&!document.querySelector('dialog[open]'))sync().catch(problem);},12000);
-
+function attachDesign(url){
+ url.searchParams.set('tema',$('#design').value);
+ const name=$('#to').value.trim();
+ if(name)url.searchParams.set('untuk',name);
+}
+function updatePreview(){
+ const url=new URL('wedding.html',location.href);
+ attachDesign(url);
+ url.searchParams.set('contoh',url.searchParams.get('tema'));
+ url.searchParams.delete('tema');
+ $('#preview').href=url.href;
+}
+if(invitation){
+ $('#owner').hidden=true;
+ document.title='Undangan Pernikahan';
+ $('.cover').setAttribute('aria-label','Undangan pernikahan');
+ $('.cover-copy span').textContent='Undangan Pernikahan';
+ $('.dedication').hidden=false;
+ $('#recipient').textContent=recipient||'Bapak/Ibu/Saudara/i';
+ if(recipient)form.elements.name.value=recipient;
+ $('#leaf-title').textContent=preview?'Pratinjau undangan':'Konfirmasi kedatangan';
+ $('#page-label').textContent='Resepsi pernikahan';
+ $('.leaf').hidden=true;
+ $('#occasion').hidden=false;
+ $('#unseal').onclick=()=>{
+   $('.leaf').hidden=false;
+   $('.cover').hidden=true;
+   $('#names').tabIndex=-1;
+   $('#names').focus();
+   window.scrollTo(0,0);
+ };
+}else{
+ $('#design').onchange=updatePreview;
+ $('#to').oninput=updatePreview;
+}
+render();
+if(!preview)sync().catch(problem);
+if(!invitation)setInterval(()=>{if(owner&&!document.hidden&&!document.querySelector('dialog[open]'))sync().catch(problem);},12000);
