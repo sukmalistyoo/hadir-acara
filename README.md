@@ -2,7 +2,7 @@
 
 Portofolio alur kehadiran berbasis QR untuk rapat dinas, dengan prototipe buku tamu pernikahan.
 
-**[Coba demo interaktif](https://sukmalistyoo.github.io/hadir-acara/)** · [Tanyakan paket acara](https://github.com/sukmalistyoo/hadir-acara/issues/new?title=Permintaan%20demo%20Hadir%20Acara)
+**[Coba demo interaktif](https://sukmalistyoo.github.io/hadir-acara/index.html)** · [Tanyakan paket acara](https://github.com/sukmalistyoo/hadir-acara/issues/new?title=Permintaan%20demo%20Hadir%20Acara)
 
 Di demo, pilih jenis acara dan tekan **Simulasikan hadir**. Lihat perubahan jumlah peserta dan urutan kedatangan. Semua nama adalah contoh. Muat ulang halaman untuk memulai kembali.
 
