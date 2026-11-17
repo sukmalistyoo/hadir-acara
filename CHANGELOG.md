@@ -10,6 +10,8 @@
 
 ### Undangan dan buku tamu
 
+- Amplop digital opsional memakai QR milik klien, dengan pratinjau dan bingkai mengikuti template undangan.
+
 - Halaman Wedding menyediakan pratinjau undangan dan buku tamu di halaman yang sama.
 - Tersedia tiga sampul: Floralia, Hutan Pinus, dan Klasik Emas. Pilihan Islami menampilkan basmalah dan judul walimah, sedangkan pilihan Umum menampilkan undangan resepsi. Browser mengingat pilihan sampul dan isi ketika pengguna kembali dari halaman rapat.
 - Tautan undangan menampilkan nama penerima dan formulir RSVP. Panitia dapat melihat jumlah orang yang mengonfirmasi kehadiran.

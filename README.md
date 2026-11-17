@@ -24,3 +24,9 @@ Layanan undangan, pencatatan kehadiran, dan presentasi untuk pasangan pengantin,
 | [Buku tamu](https://sukmalistyoo.github.io/hadir-acara/wedding.html?lihat=buku-tamu) | Pindai QR Buku Tamu di lokasi, isi nama dan alamat, lalu tanda tangani kehadiran. |
 
 Gunakan data fiktif. Sesi presentasi berlaku satu jam. Acara wedding demo berlaku 24 jam.
+
+## Amplop digital
+
+Di halaman Wedding, buka **Undangan → Amplop digital**, lalu pilih gambar QR penerima. Buka sampul untuk melihat bingkainya. Gambar hanya berada di pratinjau selama halaman operator terbuka.
+
+Untuk menerbitkannya, pilih **Siapkan file acara** dan tempatkan PNG hasil unduhan di `amplop/<id-acara>.png` pada hosting undangan. Pertahankan nama file. Tautan tamu untuk acara tersebut akan memuat gambarnya. Ganti atau hapus file pada hosting untuk memperbarui undangan yang sudah dibagikan. Gunakan gambar contoh saja di repositori demo publik.

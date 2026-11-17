@@ -25,3 +25,6 @@
 .invitation[data-wording="islami"] .dedication{color:#213d32}
 .invitation.klasik[data-wording="islami"] .dedication{color:#ffedcc}
 .invitation[data-wording="islami"] #occasion{border-top:3px double #b49b68;border-bottom:3px double #b49b68;text-align:center;color:#214c3b}
+#gift-settings{flex:1 0 100%;font-size:14px}#gift-settings summary{cursor:pointer}#gift-settings label{display:block;margin:8px 0}#gift-status{display:block;font-size:12px}
+#gift-frame{margin:28px auto 2px;background:#f6e9e2;color:#654c43;border:4px double #b38c7d;padding:16px 14px 20px;width:min(100%,310px);text-align:center;box-sizing:border-box}.pinus #gift-frame{background:#e3ede4;border-color:#638471;color:#254938}.klasik #gift-frame{background:#362e32;border-color:#c6ad75;color:#f6dfad}
+#gift-frame figcaption{font:28px/1.32 Allura,Georgia,serif;margin-bottom:8px}#gift-image{box-sizing:border-box;display:block;width:100%;height:auto;background:white;padding:12px}

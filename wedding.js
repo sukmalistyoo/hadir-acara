@@ -87,7 +87,7 @@ function updatePreview(){
  const url=new URL('wedding.html',location.href);
  attachDesign(url);
  url.searchParams.set('contoh',url.searchParams.get('tema'));
- url.searchParams.set('v','walimah1');
+ url.searchParams.set('v','amplop1');
  url.searchParams.delete('tema');
  const book=$('#show-book').getAttribute('aria-pressed')==='true';
  const stage=$('#stage');
