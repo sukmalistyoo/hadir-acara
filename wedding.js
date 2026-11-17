@@ -87,6 +87,7 @@ function updatePreview(){
  const url=new URL('wedding.html',location.href);
  attachDesign(url);
  url.searchParams.set('contoh',url.searchParams.get('tema'));
+ url.searchParams.set('v','walimah1');
  url.searchParams.delete('tema');
  const book=$('#show-book').getAttribute('aria-pressed')==='true';
  const stage=$('#stage');
@@ -96,6 +97,8 @@ function updatePreview(){
 }
 if(invitation){
  const islam=params.get('isi')==='islami';
+ document.body.dataset.wording=islam?'islami':'umum';
+ $('.basmalah').hidden=!islam;
  $('#greeting').textContent=islam?'Assalamu’alaikum warahmatullahi wabarakatuh.':'Salam hangat,';
  $('#intro').textContent=islam?'Dengan memohon rida Allah SWT, kami mengundang Bapak, Ibu, dan Saudara untuk menghadiri walimah pernikahan kami.':'Dengan penuh sukacita, kami mengundang Anda untuk merayakan hari pernikahan kami bersama keluarga dan sahabat.';
  $('#event-kind').textContent=islam?'Walimatul ‘Urs':'Resepsi pernikahan';
@@ -103,7 +106,7 @@ if(invitation){
  $('#owner').hidden=true;
  document.title='Undangan Pernikahan';
  $('.cover').setAttribute('aria-label','Undangan pernikahan');
- $('.cover-copy span').textContent='Undangan Pernikahan';
+ $('.cover-copy span').textContent=islam?'Walimatul ‘Urs':'Undangan Pernikahan';
  $('.dedication').hidden=false;
  $('#recipient').textContent=recipient||'Bapak/Ibu/Saudara/i';
  if(recipient)form.elements.name.value=recipient;
