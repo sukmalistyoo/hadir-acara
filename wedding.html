@@ -1,27 +1,15 @@
-<!doctype html>
-<html lang="id"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Hadir Acara · Portofolio</title>
-<style>
-*{box-sizing:border-box}body{--ink:#193f38;--paper:#f4f4ed;margin:0;color:var(--ink);background:var(--paper);font:16px/1.5 'DM Sans',system-ui,sans-serif}body.wedding{--ink:#683746;--paper:#fbf2ed}main{max-width:850px;margin:auto;padding:clamp(20px,5vw,60px)}header,.toolbar,footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}header{border-bottom:1px solid;padding-bottom:18px}header a,footer a{color:inherit}nav{display:flex;gap:6px}button,select{font:inherit;cursor:pointer;border-radius:7px;padding:7px 12px;border:1px solid #a7aaa0;background:transparent;color:inherit}button[aria-pressed=true],#check{background:var(--ink);color:white;border-color:var(--ink)}h1{font:500 clamp(2.4rem,6vw,4.4rem)/1.05 Georgia,serif;letter-spacing:-.045em;margin:40px 0 14px}h2{font:500 1.4rem Georgia,serif}#sub{margin:0 0 36px}.toolbar{border-block:1px solid #bcbfb4;padding:15px 0}#count{font-weight:650}ol{padding:0;list-style:none;counter-reset:row}li{counter-increment:row;display:flex;gap:16px;padding:10px 0;border-bottom:1px solid #cdd0c6}li:before{content:counter(row,decimal-leading-zero);opacity:.65;font-variant-numeric:tabular-nums}small{margin-left:auto}footer{margin-top:34px;font-size:.85rem}button:focus-visible,a:focus-visible{outline:3px solid #ab722e;outline-offset:3px}
-</style><main><header><strong>Hadir Acara</strong><nav aria-label="Jenis acara"><button id="rapat" aria-pressed="true">Rapat dinas</button><button id="wedding" aria-pressed="false">Wedding</button></nav></header>
-<h1 id="title"></h1><p id="sub"></p><div class="toolbar"><span id="count" aria-live="polite"></span><div><label id="people" hidden>Rombongan <select id="size"><option>1</option><option>2</option><option>3</option><option>4</option></select></label> <button id="check">Catat kehadiran</button></div></div><h2 id="listTitle"></h2><ol id="list"></ol><footer><span>Demo</span><a href="https://github.com/sukmalistyoo/hadir-acara">Paket &amp; akses klien ↗</a></footer></main>
-<script>
-const el=id=>document.getElementById(id);
-const records={rapat:[{name:'Peserta contoh 01',n:1}],wedding:[{name:'Keluarga contoh 01',n:2}]};
-let mode='wedding';
-function render(){
- const wedding=mode==='wedding', rows=records[mode];
- document.body.classList.toggle('wedding',wedding);
- for(const key of Object.keys(records))el(key).setAttribute('aria-pressed',String(key===mode));
- el('title').textContent=wedding?'Resepsi Laras & Damar':'Rapat koordinasi pelayanan';
- el('sub').textContent=wedding?'Resepsi siang':'Contoh daftar hadir rapat dinas · Ruang pertemuan';
- el('people').hidden=!wedding;
- const total=rows.reduce((sum,item)=>sum+item.n,0);
- el('count').textContent=wedding?rows.length+' undangan · '+total+' orang hadir':total+' peserta hadir';
- el('listTitle').textContent=wedding?'Buku tamu':'Urutan kehadiran';
- el('list').replaceChildren(...rows.map(item=>{const li=document.createElement('li'),note=document.createElement('small');li.append(item.name);note.textContent=wedding?item.n+' orang':'Hadir';li.append(note);return li;}));
-}
-for(const key of Object.keys(records))el(key).onclick=()=>{mode=key;render();};
-el('rapat').onclick=()=>location.assign('dinas.html');
-el('check').onclick=()=>{const wedding=mode==='wedding';records[mode].push({name:(wedding?'Keluarga contoh ':'Peserta contoh ')+String(records[mode].length+1).padStart(2,'0'),n:wedding?Number(el('size').value):1});render();};
-render();
-</script></html>
+<!doctype html><html lang="id"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>Undangan & Buku Tamu · Hadir Acara</title><link rel="stylesheet" href="wedding.css">
+<header><a class="brand" href="dinas.html"><b>HA</b> Hadir Acara</a><nav><a href="dinas.html">Rapat dinas</a><strong>Wedding</strong></nav></header>
+<main><div class="heading"><div><small>WEDDING</small><h1>Undangan &amp; buku tamu</h1></div><span class="badge">Demo</span></div>
+<div class="spread"><section class="cover" aria-label="Sampul undangan"><div class="cover-paper"></div><div class="rings" aria-hidden="true"></div><div class="cover-copy"><span>THE WEDDING OF</span><h2 id="couple"></h2><p id="when"></p><i>❦</i></div><div class="cover-foot" id="venue"></div></section>
+<section class="leaf"><div class="leaf-top"><small id="page-label">RESEPSI</small><span>01</span></div><h2 id="leaf-title">Buku tamu</h2>
+<div id="owner"><div class="stats"><span><b id="expected">0</b> konfirmasi hadir</span><span><b id="arrived">0</b> orang datang</span></div>
+<div class="tablewrap"><table><thead><tr><th>No.</th><th>Nama tamu</th><th>Alamat</th><th>Tanda tangan</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="actions"><button id="custom">Custom undangan</button><button id="share">Bagikan undangan</button><button id="refresh" hidden>Segarkan</button></div></div>
+<form id="rsvp" hidden><label>Nama tamu<input name="name" required maxlength="70" autocomplete="name"></label><label>Alamat / kota<input name="address" maxlength="100"></label><label>Konfirmasi kedatangan<select name="attending"><option value="yes">Akan hadir</option><option value="no">Berhalangan</option></select></label><label id="numlabel">Jumlah orang<input name="count" type="number" min="1" max="10" value="1"></label><button>Kirim konfirmasi</button></form>
+<p id="message" role="status"></p></section></div>
+<section id="package"><h2>Paket undangan digital custom</h2><p>Sampul personal, tautan undangan, konfirmasi kedatangan dan buku tamu bertanda tangan.</p><a href="https://github.com/sukmalistyoo/hadir-acara/issues/new?title=Permintaan%20paket%20undangan%20wedding">Tanyakan paket ↗</a></section></main>
+<dialog id="edit"><form id="settings"><h2>Custom undangan</h2><label>Nama pasangan<input name="couple" maxlength="80" required></label><div class="pair"><label>Tanggal<input name="date" type="date" required></label><label>Pukul<input name="time" type="time" required></label></div><label>Lokasi resepsi<input name="place" maxlength="140" required></label><label>Warna sampul<select name="theme"><option value="pine">Pinus</option><option value="sage">Sage</option><option value="rose">Mawar</option></select></label><button>Simpan</button> <button type="button" data-close>Batal</button><output></output></form></dialog>
+<dialog id="sharing"><h2>Undangan digital</h2><img id="qr" alt="QR undangan"><label>Tautan tamu<input id="url" readonly></label><a id="open" target="_blank" rel="noopener">Buka undangan ↗</a> <button id="copy">Salin</button> <button data-close>Tutup</button></dialog>
+<dialog id="sign"><h2>Check-in tamu</h2><p id="signer"></p><canvas width="340" height="110"></canvas><button id="reset">Bersihkan</button> <button id="confirm">Simpan</button> <button data-close>Batal</button></dialog>
+<script src="qr.js"></script><script src="wedding.js"></script></html>
