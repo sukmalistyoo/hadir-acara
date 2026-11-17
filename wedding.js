@@ -128,8 +128,19 @@ if(invitation){
      updatePreview();
    };
  }
- $('#design').onchange=updatePreview;
- $('#wording').onchange=updatePreview;
+ const settingsKey='hadir-wedding-invitation-style';
+ const designSelect=$('#design'), wordingSelect=$('#wording');
+ try{
+   const saved=JSON.parse(localStorage.getItem(settingsKey));
+   if(designs.includes(saved?.design))designSelect.value=saved.design;
+   if(['islami','umum'].includes(saved?.wording))wordingSelect.value=saved.wording;
+ }catch{}
+ function saveStyle(){
+   try{localStorage.setItem(settingsKey,JSON.stringify({design:designSelect.value,wording:wordingSelect.value}));}catch{}
+   updatePreview();
+ }
+ designSelect.onchange=saveStyle;
+ wordingSelect.onchange=saveStyle;
  let typing;
  $('#to').oninput=()=>{clearTimeout(typing);typing=setTimeout(updatePreview,250);};
  updatePreview();
