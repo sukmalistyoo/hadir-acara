@@ -33,8 +33,6 @@ async function sync(){
  catch(e){if(e.status===410&&!guest){localStorage.removeItem(ownerKey);owner=null;guests=[];render();}if(guest)$('#rsvp').hidden=true;throw e;}
 }
 function problem(e){$('#message').textContent=e.message||'Koneksi gagal.';}
-$('#custom').onclick=()=>{for(const [k,v] of Object.entries(details))$('#settings').elements[k].value=v;$('#edit').showModal();};
-$('#settings').onsubmit=async e=>{e.preventDefault();const next=Object.fromEntries(new FormData(e.target)),btn=e.submitter;btn.disabled=true;try{await ensureOwner();await req('/'+owner.id,next,owner.key);details=next;render();$('#edit').close();$('#message').textContent='Undangan tersimpan.';}catch(err){$('#settings output').textContent=err.message;}finally{btn.disabled=false;}};
 async function shareGuestLink(atDoor) {
  const btn=$(atDoor?'#bookqr':'#share');
  btn.disabled=true;

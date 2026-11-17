@@ -5,11 +5,10 @@
 <section class="leaf"><div class="leaf-top"><small id="page-label">RESEPSI</small><span>01</span></div><h2 id="leaf-title">Buku tamu</h2>
 <div id="owner"><div class="stats"><span><b id="expected">0</b> konfirmasi hadir</span><span><b id="arrived">0</b> orang datang</span></div>
 <div class="tablewrap"><table><thead><tr><th>No.</th><th>Nama tamu</th><th>Alamat</th><th>Tanda tangan</th></tr></thead><tbody id="rows"></tbody></table></div>
-<div class="actions"><button id="custom">Custom undangan</button><button id="share">Bagikan undangan</button><button id="bookqr">QR Buku Tamu</button><button id="refresh" hidden>Segarkan</button></div></div>
+<div class="actions"><button id="share">Bagikan undangan</button><button id="bookqr">QR Buku Tamu</button><button id="refresh" hidden>Segarkan</button></div></div>
 <form id="rsvp" hidden><label>Nama tamu<input name="name" required maxlength="70" autocomplete="name"></label><label>Alamat / kota<input name="address" maxlength="100"></label><label>Konfirmasi kedatangan<select name="attending"><option value="yes">Akan hadir</option><option value="no">Berhalangan</option></select></label><label id="numlabel">Jumlah orang<input name="count" type="number" min="1" max="10" value="1"></label><button>Kirim konfirmasi</button></form>
 <p id="message" role="status"></p></section></div>
-<section id="package"><h2>Paket undangan digital custom</h2><p>Sampul personal, tautan undangan, konfirmasi kedatangan dan buku tamu bertanda tangan.</p><a href="https://github.com/sukmalistyoo/hadir-acara/issues/new?title=Permintaan%20paket%20undangan%20wedding">Tanyakan paket ↗</a></section></main>
-<dialog id="edit"><form id="settings"><h2>Custom undangan</h2><label>Nama pasangan<input name="couple" maxlength="80" required></label><div class="pair"><label>Tanggal<input name="date" type="date" required></label><label>Pukul<input name="time" type="time" required></label></div><label>Lokasi resepsi<input name="place" maxlength="140" required></label><label>Warna sampul<select name="theme"><option value="pine">Pinus</option><option value="sage">Sage</option><option value="rose">Mawar</option></select></label><button>Simpan</button> <button type="button" data-close>Batal</button><output></output></form></dialog>
+</main>
 <dialog id="sharing"><h2>Undangan digital</h2><img id="qr" alt="QR undangan"><label>Tautan tamu<input id="url" readonly></label><a id="open" target="_blank" rel="noopener">Buka undangan ↗</a> <button id="copy">Salin</button> <button data-close>Tutup</button></dialog>
 <dialog id="sign"><h2>Check-in tamu</h2><p id="signer"></p><canvas width="340" height="110"></canvas><button id="reset">Bersihkan</button> <button id="confirm">Simpan</button> <button data-close>Batal</button></dialog>
-<script src="qr.js"></script><script src="wedding.js?v=bukutamu1"></script></html>
+<script src="qr.js"></script><script src="wedding.js?v=demo2"></script></html>
