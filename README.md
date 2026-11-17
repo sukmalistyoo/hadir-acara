@@ -33,8 +33,8 @@ Demo memakai satu tautan bersama per acara, hingga 100 konfirmasi selama 24 jam.
 
 Ruang lingkup dan biaya disepakati sebelum aktivasi. Opsi untuk rapat meliputi kop instansi, daftar hadir bertanda tangan, ekspor PDF dan pendampingan operator. Paket wedding dapat mencakup desain undangan khusus, RSVP dan buku tamu digital. Impor daftar keluarga, QR unik per undangan, akses terpisah untuk petugas dan rekap per sesi merupakan opsi pengembangan.
 
-Repositori ini berisi portofolio dan simulasi mandiri. Autentikasi klien, penyimpanan tamu, pembayaran dan aktivasi paket wedding merupakan ruang lingkup pengembangan layanan. Untuk menanyakan demo, cukup sertakan jenis acara dan fitur yang dibutuhkan di tautan permintaan demo. Daftar tamu serta kontak pribadi dibahas melalui kanal privat.
+Repositori ini berisi portofolio dan simulasi mandiri. Autentikasi klien, arsip tamu jangka panjang, pembayaran dan aktivasi paket wedding merupakan ruang lingkup pengembangan layanan. Untuk menanyakan demo, cukup sertakan jenis acara dan fitur yang dibutuhkan di tautan permintaan demo. Daftar tamu serta kontak pribadi dibahas melalui kanal privat.
 
 ## Menjalankan demo
 
-Buka `dinas.html` di browser. Form dan arsip contoh berjalan lokal. Fitur presentasi live memerlukan internet untuk menyinkronkan halaman melalui layanan sesi demo.
+Buka `dinas.html` di browser. Form dan arsip contoh berjalan lokal. Presentasi live, penerbitan undangan dan konfirmasi kedatangan membutuhkan internet.
