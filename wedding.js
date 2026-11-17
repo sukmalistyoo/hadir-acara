@@ -146,7 +146,8 @@ if(invitation){
  wordingSelect.onchange=saveStyle;
  let typing;
  $('#to').oninput=()=>{clearTimeout(typing);typing=setTimeout(updatePreview,250);};
- updatePreview();
+ if(params.get('lihat')==='buku-tamu')$('#show-book').click();
+ else updatePreview();
 }
 render();
 if(!preview)sync().catch(problem);
