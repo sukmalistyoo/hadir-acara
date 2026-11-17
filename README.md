@@ -16,7 +16,8 @@ Pada aplikasi operasional, peserta memindai QR, mengisi identitas dan membubuhka
 
 1. Buka **Custom undangan** untuk mengatur nama pasangan, tanggal, jam, lokasi dan warna sampul.
 2. Pilih **Bagikan undangan** untuk mendapatkan QR dan tautan tamu. Tamu mengisi nama, alamat/kota, jumlah orang, dan konfirmasi hadir atau berhalangan. Dari browser yang sama konfirmasi bisa diperbarui sebelum check-in.
-3. Pemilik melihat rekap di browser tempat acara dibuat. Saat tamu datang, pilih **Check-in** dan catat tanda tangan untuk membedakan RSVP dari kedatangan di lokasi.
+3. Untuk check-in mandiri di lokasi, buka **QR Buku Tamu**. Tamu memindai QR, mengisi nama, alamat dan jumlah orang, lalu membubuhkan tanda tangan di HP dan menekan **Simpan kehadiran**.
+4. Pemilik melihat rekap di browser tempat acara dibuat. Saat tamu datang, pilih **Check-in** dan catat tanda tangan untuk membedakan RSVP dari kedatangan di lokasi.
 
 Demo memakai satu tautan bersama per acara, hingga 100 konfirmasi selama 24 jam. Gunakan data fiktif. Kunci akses pemilik disimpan di browser pembuat acara. Tautan tamu hanya membuka undangan dan formulir RSVP.
 

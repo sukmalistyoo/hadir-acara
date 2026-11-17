@@ -35,7 +35,24 @@ async function sync(){
 function problem(e){$('#message').textContent=e.message||'Koneksi gagal.';}
 $('#custom').onclick=()=>{for(const [k,v] of Object.entries(details))$('#settings').elements[k].value=v;$('#edit').showModal();};
 $('#settings').onsubmit=async e=>{e.preventDefault();const next=Object.fromEntries(new FormData(e.target)),btn=e.submitter;btn.disabled=true;try{await ensureOwner();await req('/'+owner.id,next,owner.key);details=next;render();$('#edit').close();$('#message').textContent='Undangan tersimpan.';}catch(err){$('#settings output').textContent=err.message;}finally{btn.disabled=false;}};
-$('#share').onclick=async()=>{const btn=$('#share');btn.disabled=true;try{await ensureOwner();render();const url=new URL(location.href);url.search='';url.hash='';url.searchParams.set('undangan',owner.id);$('#url').value=url.href;$('#open').href=url.href;$('#qr').src=await makeQr(url.href);$('#sharing').showModal();}catch(e){problem(e);}finally{btn.disabled=false;}};
+async function shareGuestLink(atDoor) {
+ const btn=$(atDoor?'#bookqr':'#share');
+ btn.disabled=true;
+ try{
+   await ensureOwner();render();
+   const url=new URL(atDoor?'buku-tamu.html':'wedding.html',location.href);
+   if(atDoor){
+     const data=await req('/'+owner.id,null,owner.key);
+     url.searchParams.set('acara',owner.id);url.hash=data.entry_key;
+   }else url.searchParams.set('undangan',owner.id);
+   $('#sharing h2').textContent=atDoor?'QR Buku Tamu':'Undangan digital';
+   $('#open').textContent=atDoor?'Buka form tamu ↗':'Buka undangan ↗';
+   $('#qr').alt=atDoor?'QR Buku Tamu':'QR undangan';$('#copy').textContent='Salin';
+   $('#url').value=url.href;$('#open').href=url.href;$('#qr').src=await makeQr(url.href);$('#sharing').showModal();
+ }catch(e){problem(e);}finally{btn.disabled=false;}
+}
+$('#share').onclick=()=>shareGuestLink(false);
+$('#bookqr').onclick=()=>shareGuestLink(true);
 $('#copy').onclick=async()=>{try{await navigator.clipboard.writeText($('#url').value);$('#copy').textContent='Tersalin';}catch{$('#url').select();}};
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>b.closest('dialog').close();
 $('#refresh').onclick=()=>sync().then(()=>$('#message').textContent='Rekap diperbarui.').catch(problem);
