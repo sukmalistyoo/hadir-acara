@@ -2,7 +2,7 @@
 
 Layanan undangan, pencatatan kehadiran, dan presentasi untuk pasangan pengantin, wedding organizer, dan instansi.
 
-[Layanan acara](https://sukmalistyoo.github.io/hadir-acara/layanan.html)
+[Layanan acara](https://sukmalistyoo.github.io/hadir-acara/layanan.html) · [Changelog](CHANGELOG.md)
 
 ## Penawaran layanan
 
