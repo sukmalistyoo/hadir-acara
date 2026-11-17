@@ -1,5 +1,6 @@
 const el=id=>document.getElementById(id), form=el('entry'), pad=el('ink'), ctx=pad.getContext('2d');
 const room=new URLSearchParams(location.search).get('acara'),entryKey=location.hash.slice(1);
+const preview=!room && new URLSearchParams(location.search).has('contoh');
 const api='https://pemdesgripit.id/api/v1/demo/buku-tamu/'+encodeURIComponent(room||'');
 const tokenKey='hadir-entry:'+room;
 let drawing=false,marked=false,token=sessionStorage.getItem(tokenKey)||crypto.randomUUID();
@@ -11,6 +12,9 @@ pad.onlostpointercapture=()=>drawing=false;
 el('clear').onclick=()=>{ctx.clearRect(0,0,pad.width,pad.height);marked=false;};
 function finish(){form.hidden=true;el('heading').hidden=true;el('msg').hidden=true;el('done').hidden=false;sessionStorage.removeItem(tokenKey);}
 async function init(){
+ if(preview){
+   el('names').textContent='Laras & Damar';el('event').textContent='Pendopo Taman Pinus';form.hidden=false;el('msg').textContent='';return;
+ }
  if(!/^[0-9a-f-]{36}$/i.test(room||'')||!/^[0-9a-f]{64}$/.test(entryKey)){el('msg').textContent='Pindai QR Buku Tamu dari meja penerima tamu.';return;}
  const res=await fetch(api,{cache:'no-store',credentials:'omit',headers:{Accept:'application/json'}});
  if(!res.ok)throw Error(res.status===410?'Acara sudah berakhir.':'Buku tamu belum dapat dibuka.');
@@ -19,6 +23,7 @@ async function init(){
  el('msg').textContent='';form.hidden=false;sessionStorage.setItem(tokenKey,token);
 }
 form.onsubmit=async e=>{e.preventDefault();if(!marked){el('msg').textContent='Bubuhkan tanda tangan terlebih dahulu.';return;}
+ if(preview){el('done').querySelector('p').textContent='Simulasi kehadiran selesai.';finish();return;}
  const button=e.submitter;button.disabled=true;
  try{const data={token,entry_key:entryKey,rsvp_token:localStorage.getItem('hadir-rsvp:'+room),name:form.elements.name.value.trim(),address:form.elements.address.value.trim(),count:Number(form.elements.count.value),attending:true,ink:pad.toDataURL('image/png')};
  const r=await fetch(api,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},credentials:'omit',body:JSON.stringify(data)});

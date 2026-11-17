@@ -70,7 +70,7 @@ $('#copy').onclick=async()=>{try{await navigator.clipboard.writeText($('#url').v
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>b.closest('dialog').close();
 $('#refresh').onclick=()=>sync().then(()=>$('#message').textContent='Rekap diperbarui.').catch(problem);
 const form=$('#rsvp');form.elements.attending.onchange=()=>$('#numlabel').hidden=form.elements.attending.value==='no';
-form.onsubmit=async e=>{e.preventDefault();const btn=e.submitter;btn.disabled=true;try{const k='hadir-rsvp:'+guest;const token=localStorage.getItem(k)||crypto.randomUUID();localStorage.setItem(k,token);await req('/'+guest,{token,name:form.elements.name.value,address:form.elements.address.value,attending:form.elements.attending.value==='yes',count:form.elements.attending.value==='yes'?Number(form.elements.count.value):0});$('#message').textContent='Terima kasih. Konfirmasi Anda tersimpan.';}catch(err){problem(err);}finally{btn.disabled=false;}};
+form.onsubmit=async e=>{e.preventDefault();if(preview){$('#message').textContent='Terima kasih. Simulasi konfirmasi selesai.';return;}const btn=e.submitter;btn.disabled=true;try{const k='hadir-rsvp:'+guest;const token=localStorage.getItem(k)||crypto.randomUUID();localStorage.setItem(k,token);await req('/'+guest,{token,name:form.elements.name.value,address:form.elements.address.value,attending:form.elements.attending.value==='yes',count:form.elements.attending.value==='yes'?Number(form.elements.count.value):0});$('#message').textContent='Terima kasih. Konfirmasi Anda tersimpan.';}catch(err){problem(err);}finally{btn.disabled=false;}};
 const pad=$('canvas'),ctx=pad.getContext('2d');let drawing=false;
 function clearPad(){ctx.clearRect(0,0,pad.width,pad.height);marked=false;$('#confirm').disabled=true;}
 function xy(e){const r=pad.getBoundingClientRect();return [(e.clientX-r.left)*pad.width/r.width,(e.clientY-r.top)*pad.height/r.height];}
@@ -79,6 +79,7 @@ pad.onpointermove=e=>{if(drawing){ctx.lineTo(...xy(e));ctx.stroke();marked=true;
 $('#reset').onclick=clearPad;$('#confirm').onclick=async()=>{if(!marked)return;$('#confirm').disabled=true;try{await req('/'+owner.id,{guest:selected,signature:pad.toDataURL()},owner.key);$('#sign').close();await sync();}catch(e){$('#sign').close();problem(e);}finally{$('#confirm').disabled=false;}};
 function attachDesign(url){
  url.searchParams.set('tema',$('#design').value);
+ url.searchParams.set('isi',$('#wording').value);
  const name=$('#to').value.trim();
  if(name)url.searchParams.set('untuk',name);
 }
@@ -87,9 +88,18 @@ function updatePreview(){
  attachDesign(url);
  url.searchParams.set('contoh',url.searchParams.get('tema'));
  url.searchParams.delete('tema');
- $('#preview').href=url.href;
+ const book=$('#show-book').getAttribute('aria-pressed')==='true';
+ const stage=$('#stage');
+ stage.title=book?'Pratinjau buku tamu':'Pratinjau undangan';
+ stage.src=book?'buku-tamu.html?contoh=1':url.href;
+ $('#invitation-options').hidden=book;
 }
 if(invitation){
+ const islam=params.get('isi')==='islami';
+ $('#greeting').textContent=islam?'Assalamu’alaikum warahmatullahi wabarakatuh.':'Salam hangat,';
+ $('#intro').textContent=islam?'Dengan memohon rida Allah SWT, kami mengundang Bapak, Ibu, dan Saudara untuk menghadiri walimah pernikahan kami.':'Dengan penuh sukacita, kami mengundang Anda untuk merayakan hari pernikahan kami bersama keluarga dan sahabat.';
+ $('#event-kind').textContent=islam?'Walimatul ‘Urs':'Resepsi pernikahan';
+ $('#blessing').textContent=islam?'Mohon doa agar rumah tangga kami senantiasa diliputi ketenteraman, kasih sayang, dan rahmat Allah.':'Kehadiran Anda akan membuat hari kami semakin berkesan. Terima kasih atas kasih dan doa restunya.';
  $('#owner').hidden=true;
  document.title='Undangan Pernikahan';
  $('.cover').setAttribute('aria-label','Undangan pernikahan');
@@ -97,7 +107,8 @@ if(invitation){
  $('.dedication').hidden=false;
  $('#recipient').textContent=recipient||'Bapak/Ibu/Saudara/i';
  if(recipient)form.elements.name.value=recipient;
- $('#leaf-title').textContent=preview?'Pratinjau undangan':'Konfirmasi kedatangan';
+ $('#leaf-title').textContent='Konfirmasi kedatangan';
+ if(preview)form.hidden=false;
  $('#page-label').textContent='Resepsi pernikahan';
  $('.leaf').hidden=true;
  $('#occasion').hidden=false;
@@ -109,8 +120,19 @@ if(invitation){
    window.scrollTo(0,0);
  };
 }else{
+ $('.cover').hidden=true;
+ $('#studio').hidden=false;
+ for(const id of ['show-invite','show-book']){
+   $('#'+id).onclick=()=>{
+     for(const button of document.querySelectorAll('.switch button'))button.setAttribute('aria-pressed',String(button.id===id));
+     updatePreview();
+   };
+ }
  $('#design').onchange=updatePreview;
- $('#to').oninput=updatePreview;
+ $('#wording').onchange=updatePreview;
+ let typing;
+ $('#to').oninput=()=>{clearTimeout(typing);typing=setTimeout(updatePreview,250);};
+ updatePreview();
 }
 render();
 if(!preview)sync().catch(problem);
