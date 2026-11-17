@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="id"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Hadir Acara · Portofolio</title>
+<style>
+*{box-sizing:border-box}body{--ink:#193f38;--paper:#f4f4ed;margin:0;color:var(--ink);background:var(--paper);font:16px/1.5 'DM Sans',system-ui,sans-serif}body.wedding{--ink:#683746;--paper:#fbf2ed}main{max-width:850px;margin:auto;padding:clamp(20px,5vw,60px)}header,.toolbar,footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}header{border-bottom:1px solid;padding-bottom:18px}header a,footer a{color:inherit}nav{display:flex;gap:6px}button,select{font:inherit;cursor:pointer;border-radius:7px;padding:7px 12px;border:1px solid #a7aaa0;background:transparent;color:inherit}button[aria-pressed=true],#check{background:var(--ink);color:white;border-color:var(--ink)}h1{font:500 clamp(2.4rem,6vw,4.4rem)/1.05 Georgia,serif;letter-spacing:-.045em;margin:40px 0 14px}h2{font:500 1.4rem Georgia,serif}#sub{margin:0 0 36px}.toolbar{border-block:1px solid #bcbfb4;padding:15px 0}#count{font-weight:650}ol{padding:0;list-style:none;counter-reset:row}li{counter-increment:row;display:flex;gap:16px;padding:10px 0;border-bottom:1px solid #cdd0c6}li:before{content:counter(row,decimal-leading-zero);opacity:.65;font-variant-numeric:tabular-nums}small{margin-left:auto}footer{margin-top:34px;font-size:.85rem}button:focus-visible,a:focus-visible{outline:3px solid #ab722e;outline-offset:3px}
+</style><main><header><strong>Hadir Acara</strong><nav aria-label="Jenis acara"><button id="rapat" aria-pressed="true">Rapat dinas</button><button id="wedding" aria-pressed="false">Wedding</button></nav></header>
+<h1 id="title"></h1><p id="sub"></p><div class="toolbar"><span id="count" aria-live="polite"></span><div><label id="people" hidden>Rombongan <select id="size"><option>1</option><option>2</option><option>3</option><option>4</option></select></label> <button id="check">Simulasikan hadir</button></div></div><h2 id="listTitle"></h2><ol id="list"></ol><footer><span>Demo lokal · Data fiktif</span><a href="https://github.com/sukmalistyoo/hadir-acara">Paket &amp; akses klien ↗</a></footer></main>
+<script>
+const el=id=>document.getElementById(id);
+const records={rapat:[{name:'Peserta contoh 01',n:1}],wedding:[{name:'Keluarga contoh 01',n:2}]};
+let mode='rapat';
+function render(){
+ const wedding=mode==='wedding', rows=records[mode];
+ document.body.classList.toggle('wedding',wedding);
+ for(const key of Object.keys(records))el(key).setAttribute('aria-pressed',String(key===mode));
+ el('title').textContent=wedding?'Resepsi Laras & Damar':'Rapat koordinasi pelayanan';
+ el('sub').textContent=wedding?'Contoh buku tamu pernikahan · Sesi resepsi siang':'Contoh daftar hadir rapat dinas · Ruang pertemuan';
+ el('people').hidden=!wedding;
+ const total=rows.reduce((sum,item)=>sum+item.n,0);
+ el('count').textContent=wedding?rows.length+' undangan · '+total+' orang hadir':total+' peserta hadir';
+ el('listTitle').textContent=wedding?'Buku tamu':'Urutan kehadiran';
+ el('list').replaceChildren(...rows.map(item=>{const li=document.createElement('li'),note=document.createElement('small');li.append(item.name);note.textContent=wedding?item.n+' orang':'Hadir';li.append(note);return li;}));
+}
+for(const key of Object.keys(records))el(key).onclick=()=>{mode=key;render();};
+el('check').onclick=()=>{const wedding=mode==='wedding';records[mode].push({name:(wedding?'Keluarga contoh ':'Peserta contoh ')+String(records[mode].length+1).padStart(2,'0'),n:wedding?Number(el('size').value):1});render();};
+render();
+</script></html>
