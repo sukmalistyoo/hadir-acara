@@ -4,11 +4,11 @@ Portofolio alur kehadiran berbasis QR untuk rapat dinas, dengan prototipe buku t
 
 **[Coba demo interaktif](https://sukmalistyoo.github.io/hadir-acara/index.html)** · [Tanyakan paket acara](https://github.com/sukmalistyoo/hadir-acara/issues/new?title=Permintaan%20demo%20Hadir%20Acara)
 
-Di demo, pilih jenis acara dan tekan **Simulasikan hadir**. Lihat perubahan jumlah peserta dan urutan kedatangan. Semua nama adalah contoh. Muat ulang halaman untuk memulai kembali.
+Pada demo rapat dinas, ubah keterangan kegiatan untuk melihat perubahan pada lembar A4. Tambahkan peserta contoh, coba tanda tangan, simpan arsip di browser, atau cetak ke PDF. Tab Wedding menyediakan simulasi undangan keluarga. Gunakan data fiktif.
 
 ## Rapat dinas
 
-Pada aplikasi operasional, peserta memindai QR, mengisi identitas dan membubuhkan tanda tangan dari HP. Panitia melihat daftar hadir dan mencetak PDF dengan kop acara. QR materi membuka tayangan yang mengikuti halaman operator. Demo publik memperagakan pencatatan kehadiran dengan data fiktif di browser.
+Pada aplikasi operasional, peserta memindai QR, mengisi identitas dan membubuhkan tanda tangan dari HP. Panitia melihat daftar hadir dan mencetak PDF dengan kop acara. QR materi membuka tayangan yang mengikuti halaman operator. Untuk demonstrasi lintas perangkat, klik **Materi Rapat → Mulai sesi demo → QR Materi**. Pindai QR dari HP kedua. Peserta mengikuti tiga slide contoh saat operator menekan panah. Sesi berlangsung satu jam. QR Rapat untuk simulasi input lokal terpisah dari QR Materi.
 
 ## Buku tamu wedding · prototipe
 
@@ -31,4 +31,4 @@ Repositori ini berisi portofolio dan simulasi mandiri. Autentikasi klien, penyim
 
 ## Menjalankan demo
 
-Buka `index.html` di browser. Demo dapat berjalan tanpa instalasi, akun, atau koneksi ke database desa.
+Buka `index.html` di browser. Form dan arsip contoh berjalan lokal. Fitur presentasi live memerlukan internet untuk menyinkronkan halaman melalui layanan sesi demo.

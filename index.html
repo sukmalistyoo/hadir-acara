@@ -1,26 +1,10 @@
-<!doctype html>
-<html lang="id"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Hadir Acara · Portofolio</title>
-<style>
-*{box-sizing:border-box}body{--ink:#193f38;--paper:#f4f4ed;margin:0;color:var(--ink);background:var(--paper);font:16px/1.5 'DM Sans',system-ui,sans-serif}body.wedding{--ink:#683746;--paper:#fbf2ed}main{max-width:850px;margin:auto;padding:clamp(20px,5vw,60px)}header,.toolbar,footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}header{border-bottom:1px solid;padding-bottom:18px}header a,footer a{color:inherit}nav{display:flex;gap:6px}button,select{font:inherit;cursor:pointer;border-radius:7px;padding:7px 12px;border:1px solid #a7aaa0;background:transparent;color:inherit}button[aria-pressed=true],#check{background:var(--ink);color:white;border-color:var(--ink)}h1{font:500 clamp(2.4rem,6vw,4.4rem)/1.05 Georgia,serif;letter-spacing:-.045em;margin:40px 0 14px}h2{font:500 1.4rem Georgia,serif}#sub{margin:0 0 36px}.toolbar{border-block:1px solid #bcbfb4;padding:15px 0}#count{font-weight:650}ol{padding:0;list-style:none;counter-reset:row}li{counter-increment:row;display:flex;gap:16px;padding:10px 0;border-bottom:1px solid #cdd0c6}li:before{content:counter(row,decimal-leading-zero);opacity:.65;font-variant-numeric:tabular-nums}small{margin-left:auto}footer{margin-top:34px;font-size:.85rem}button:focus-visible,a:focus-visible{outline:3px solid #ab722e;outline-offset:3px}
-</style><main><header><strong>Hadir Acara</strong><nav aria-label="Jenis acara"><button id="rapat" aria-pressed="true">Rapat dinas</button><button id="wedding" aria-pressed="false">Wedding</button></nav></header>
-<h1 id="title"></h1><p id="sub"></p><div class="toolbar"><span id="count" aria-live="polite"></span><div><label id="people" hidden>Rombongan <select id="size"><option>1</option><option>2</option><option>3</option><option>4</option></select></label> <button id="check">Simulasikan hadir</button></div></div><h2 id="listTitle"></h2><ol id="list"></ol><footer><span>Demo lokal · Data fiktif</span><a href="https://github.com/sukmalistyoo/hadir-acara">Paket &amp; akses klien ↗</a></footer></main>
-<script>
-const el=id=>document.getElementById(id);
-const records={rapat:[{name:'Peserta contoh 01',n:1}],wedding:[{name:'Keluarga contoh 01',n:2}]};
-let mode='rapat';
-function render(){
- const wedding=mode==='wedding', rows=records[mode];
- document.body.classList.toggle('wedding',wedding);
- for(const key of Object.keys(records))el(key).setAttribute('aria-pressed',String(key===mode));
- el('title').textContent=wedding?'Resepsi Laras & Damar':'Rapat koordinasi pelayanan';
- el('sub').textContent=wedding?'Contoh buku tamu pernikahan · Sesi resepsi siang':'Contoh daftar hadir rapat dinas · Ruang pertemuan';
- el('people').hidden=!wedding;
- const total=rows.reduce((sum,item)=>sum+item.n,0);
- el('count').textContent=wedding?rows.length+' undangan · '+total+' orang hadir':total+' peserta hadir';
- el('listTitle').textContent=wedding?'Buku tamu':'Urutan kehadiran';
- el('list').replaceChildren(...rows.map(item=>{const li=document.createElement('li'),note=document.createElement('small');li.append(item.name);note.textContent=wedding?item.n+' orang':'Hadir';li.append(note);return li;}));
-}
-for(const key of Object.keys(records))el(key).onclick=()=>{mode=key;render();};
-el('check').onclick=()=>{const wedding=mode==='wedding';records[mode].push({name:(wedding?'Keluarga contoh ':'Peserta contoh ')+String(records[mode].length+1).padStart(2,'0'),n:wedding?Number(el('size').value):1});render();};
-render();
-</script></html>
+<!doctype html><html lang="id"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Form Daftar Hadir · Hadir Acara</title><link rel="stylesheet" href="dinas.css">
+<header class="bar"><b>Hadir Acara</b><span>Rapat dinas</span><a href="wedding.html">Wedding ↗</a></header>
+<main><h1>Form Daftar Hadir <small>Demo · data fiktif</small></h1><div class="workspace">
+<aside id="forms"><details><summary>1. Kop Daftar Hadir <i>Custom kop</i></summary><label>Instansi<input data-field="instansi"></label><label>Unit / desa<input data-field="desa"></label><label>Alamat kantor<input data-field="kantor"></label></details>
+<details open><summary>2. Keterangan Kegiatan &amp; Mengetahui</summary><label>Acara / Nama kegiatan<input data-field="acara"></label><label>Hari / Tanggal<input data-field="tanggal"></label><div class="pair"><label>Jam mulai<input data-field="mulai"></label><label>Jam selesai<input data-field="selesai"></label></div><label>Tempat<input data-field="tempat"></label><div class="pair"><label>Mengetahui<input data-field="jabatan"></label><label>Nama pejabat<input data-field="pejabat"></label></div></details>
+<details><summary>3. Tambah Peserta &amp; Tanda Tangan</summary><form id="add"><label>Nama contoh<input name="nama" required maxlength="60"></label><div class="pair"><label>L/P<select name="jk"><option>L</option><option>P</option></select></label><label>Jabatan / unsur<input name="peran" maxlength="45"></label></div><label>Alamat contoh<input name="alamat" maxlength="70"></label><label>Tanda tangan contoh<canvas id="pad" width="360" height="90"></canvas></label><button type="button" id="clear">Bersihkan</button> <button>Tambah ke tabel</button></form></details>
+<details><summary>4. Kelola Baris Tabel</summary><label>Jumlah baris kosong minimum<input id="slots" type="number" min="1" max="100"></label></details></aside>
+<section class="preview"><article id="paper"><div class="letter"><div class="seal" aria-hidden="true">HA</div><strong data-text="instansi"></strong><b data-text="desa"></b><span data-text="kantor"></span></div><h2>DAFTAR HADIR</h2><dl id="meta"></dl><table><colgroup><col style="width:5%"><col style="width:24%"><col style="width:5%"><col style="width:27%"><col style="width:20%"><col style="width:19%"></colgroup><thead><tr><th>No.</th><th>NAMA</th><th>L/P</th><th>ALAMAT</th><th>JABATAN / UNSUR</th><th>TANDA TANGAN</th></tr></thead><tbody></tbody></table><div class="approval">Mengetahui,<br><span data-text="jabatan"></span><p data-text="pejabat"></p></div></article></section>
+<aside class="actions"><strong>ARSIP &amp; AKSI</strong><select id="archive" aria-label="Arsip lokal"></select><button id="new">＋ Baru</button><button id="save">Simpan lokal</button><button id="qr">QR Rapat</button><a class="primary" href="https://pemdesgripit.id/demo/hadir-acara/materi.html" target="_blank" rel="noopener">Materi Rapat ↗</a><button onclick="print()">PDF / Cetak</button><output id="status"></output></aside></div></main>
+<dialog id="dialog"><b>QR Rapat · contoh formulir</b><p>Simulasi ini tersimpan di browser masing-masing.</p><img src="qr-rapat.png" alt="QR contoh form peserta" width="200"><form method="dialog"><button>Tutup</button></form></dialog><script src="dinas.js"></script></html>
