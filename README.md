@@ -30,3 +30,13 @@ Gunakan data fiktif. Sesi presentasi berlaku satu jam. Acara wedding demo berlak
 Di halaman Wedding, buka **Undangan → Amplop digital**, lalu pilih gambar QR penerima. Buka sampul untuk melihat bingkainya. Gambar hanya berada di pratinjau selama halaman operator terbuka.
 
 Untuk menerbitkannya, pilih **Siapkan file acara** dan tempatkan PNG hasil unduhan di `amplop/<id-acara>.png` pada hosting undangan. Pertahankan nama file. Tautan tamu untuk acara tersebut akan memuat gambarnya. Ganti atau hapus file pada hosting untuk memperbarui undangan yang sudah dibagikan. Gunakan gambar contoh saja di repositori demo publik.
+
+## Lisensi & Ketentuan Penggunaan
+
+Proyek ini dilisensikan di bawah **[GNU Affero General Public License v3.0 (AGPL-3.0)](./LICENSE)** — Copyright © 2026 **sukmalistyoo**.
+
+- **Bebas digunakan** untuk keperluan belajar, pribadi, dan uji coba demo.
+- **Wajib mencantumkan atribusi** (kredit pencipta asli dan tautan ke repository ini).
+- **Wajib tetap terbuka (*Copyleft*):** Jika kode ini dimodifikasi dan ditayangkan ulang sebagai layanan web publik, kode sumber turunannya wajib tetap terbuka di bawah lisensi **AGPL-3.0** yang sama (tidak boleh dijadikan layanan tertutup/*closed-source* atau dijual ulang tanpa izin tertulis).
+- Untuk **lisensi komersial tertutup**, paket acara terkelola, atau pemasangan di server klien, silakan hubungi pemilik repository.
+- Komponen pihak ketiga tetap tunduk pada lisensinya masing-masing: `Allura-LICENSE.txt` (OFL-1.1), `DIJKSTRA-LICENSE.txt` (MIT), dan `QR-LICENSE.txt` (MIT).
